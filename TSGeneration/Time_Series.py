@@ -3,7 +3,7 @@ from os.path import join
 data_path = join('..', 'Data')
 sys.path.append(data_path)
 
-from paramerers_recource import *
+from parameters_resource import *
 import numpy as np
 
 class Time_Series(object):
