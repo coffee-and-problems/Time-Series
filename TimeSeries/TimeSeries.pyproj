@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>b1d7afb0-7ba5-4b5c-b517-5fdfbf1a8622</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>TimeSeries.py</StartupFile>
+    <StartupFile>TimeSeriesAnalysis.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -21,7 +21,10 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="TimeSeries.py" />
+    <Compile Include="TimeSeriesAnalysis.py" />
+    <Compile Include="TSAnalyzer.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
