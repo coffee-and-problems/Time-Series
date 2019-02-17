@@ -26,5 +26,10 @@ def center(np_data, trend):
     return no_trend - mean
 
 def periodogramma(centered_series):
+    """Возвращает частоты и периодограмму"""
     from scipy.fftpack import fft, ifft
-    return fft(centered_series)
+    X = fft(centered_series)
+    D = 1/(N*N) * (X.real*X.real + X.imag*X.imag)
+    p = np.array_split(D, 2)[0]
+    x = (np.linspace(0, (N-1), N//(2*Δt)))/(2*N)
+    return (x, p)
