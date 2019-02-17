@@ -33,3 +33,8 @@ def periodogramma(centered_series):
     p = np.array_split(D, 2)[0]
     x = (np.linspace(0, (N-1), N//(2*Δt)))/(2*N)
     return (x, p)
+
+def dispersion(centered_series):
+    """Оценка дисперсии центрированного ряда"""
+    sum = np.sum(centered_series*centered_series)
+    return 1/(N - 1) * sum
