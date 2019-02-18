@@ -27,7 +27,7 @@ def center(np_data, trend):
 
 def periodogramma(centered_series):
     """Возвращает частоты и периодограмму"""
-    from scipy.fftpack import fft, ifft
+    from scipy.fftpack import fft
     X = fft(centered_series)
     D = 1/(N*N) * (X.real*X.real + X.imag*X.imag)
     p = np.array_split(D, 2)[0]
@@ -38,3 +38,18 @@ def dispersion(centered_series):
     """Оценка дисперсии центрированного ряда"""
     sum = np.sum(centered_series*centered_series)
     return 1/(N - 1) * sum
+
+def autocorrelation(centered_series):
+    """Возвращает коррелограмму"""
+    cor = np.correlate(centered_series, centered_series, "full")
+    return np.array_split(cor, 2)[1]
+
+
+#Осторожно! Делегаты!
+
+def Tukey(a, N_coeff):
+    """Возвращает numpy массив весовой функции Тьюки с параметрами a, N_coeff*N"""
+    N_asterix = N_coeff * N
+    def __W(m):
+        1 - 2*a + 2*a*np.cos(np.pi)
+

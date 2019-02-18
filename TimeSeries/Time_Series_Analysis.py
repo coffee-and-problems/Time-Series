@@ -35,7 +35,21 @@ plt.subplot(4, 1, 4)
 plt.plot(x, fourier)
 plt.axhline(y = 0.05, color='orange', linestyle='--')
 plt.title('Периодограмма')
-plt.xlabel('time (s)')
+plt.xlabel('frequency (1/s)')
 
 plt.tight_layout()
+plt.show()
+
+corellogramma = TSAnalyzer.autocorrelation(centered_series)
+
+plt.subplot(3, 1, 1)
+plt.plot(corellogramma)
+plt.title('Смещенная коррелограмма')
+plt.xlabel('time (s)')
+
+a = 0.25
+N_coeff = 0.1
+#smoothed_period
+weighted_corell = corellogramma * TSAnalyzer.Tukey(a, N_coeff)
+
 plt.show()
