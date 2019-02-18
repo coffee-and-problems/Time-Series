@@ -39,9 +39,15 @@ def dispersion(centered_series):
     sum = np.sum(centered_series*centered_series)
     return 1/(N - 1) * sum
 
+def autocorr2(x):
+    r2=np.fft.ifft(np.abs(np.fft.fft(x))**2).real
+    c=(r2/N-np.mean(x)**2)/np.std(x)**2
+    return c[:len(x)//2]
+
 def autocorrelation(centered_series):
     """Возвращает коррелограмму"""
     cor = np.correlate(centered_series, centered_series, "full")
+    cor = cor/85
     return np.array_split(cor, 2)[1]
 
 
@@ -50,6 +56,14 @@ def autocorrelation(centered_series):
 def Tukey(a, N_coeff):
     """Возвращает numpy массив весовой функции Тьюки с параметрами a, N_coeff*N"""
     N_asterix = N_coeff * N
-    def __W(m):
-        1 - 2*a + 2*a*np.cos(np.pi)
+    return np.fromfunction(lambda m: 1-2*a + 2*a*np.cos((np.pi*m)/N_asterix), (N-1, ), dtype=int)
 
+def smooth(weighted_corell):
+    """Возвращает частоты и сглаженную периодограмму"""
+    from scipy.fftpack import fft
+    c0 = np.full((N-1,), weighted_corell[0])
+    fftX = fft(weighted_corell)
+    D = 1/N * 2 *(fftX.real - c0)
+    p = np.array_split(D, 2)[0]
+    x = (np.linspace(0, (N-1), N//(2*Δt)))/(2*N)
+    return (x, p)

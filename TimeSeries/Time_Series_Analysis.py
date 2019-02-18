@@ -40,6 +40,13 @@ plt.xlabel('frequency (1/s)')
 plt.tight_layout()
 plt.show()
 
+#corellogramma = TSAnalyzer.autocorr2(centered_series)
+
+#plt.subplot(3, 1, 1)
+#plt.plot(corellogramma)
+#plt.title('Смещенная коррелограмма')
+#plt.xlabel('time (s)')
+
 corellogramma = TSAnalyzer.autocorrelation(centered_series)
 
 plt.subplot(3, 1, 1)
@@ -48,8 +55,24 @@ plt.title('Смещенная коррелограмма')
 plt.xlabel('time (s)')
 
 a = 0.25
-N_coeff = 0.1
-#smoothed_period
+N_coeff = 0.5
 weighted_corell = corellogramma * TSAnalyzer.Tukey(a, N_coeff)
+(x, smoothed_period) = TSAnalyzer.smooth(weighted_corell)
 
+plt.subplot(3, 1, 2)
+plt.plot(x, smoothed_period)
+plt.title('Сглаженная периодограмма, параметры a = %.2f, N* = %.1f N' % (a, N_coeff))
+plt.xlabel('frequency (1/s)')
+
+a = 0.25
+N_coeff = 0.1
+weighted_corell = corellogramma * TSAnalyzer.Tukey(a, N_coeff)
+(x, smoothed_period) = TSAnalyzer.smooth(weighted_corell)
+
+plt.subplot(3, 1, 3)
+plt.plot(weighted_corell)
+plt.title('Сглаженная периодограмма, параметры a = %.2f, N* = %.1f N' % (a, N_coeff))
+plt.xlabel('frequency (1/s)')
+
+plt.tight_layout()
 plt.show()
