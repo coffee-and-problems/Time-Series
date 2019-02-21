@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import TSAnalyzer
 
 time_series = np.loadtxt(join('..', 'Data', 'time_series_data.dat'))
+N = len(time_series)
 
 plt.subplot(4, 1, 1)
 plt.plot(time_series)
@@ -32,20 +33,13 @@ plt.xlabel('time (s)')
 (x, fourier) = TSAnalyzer.periodogramma(centered_series)
 
 plt.subplot(4, 1, 4)
-plt.plot(x, fourier)
+plt.plot(fourier)
 plt.axhline(y = 0.05, color='orange', linestyle='--')
 plt.title('Периодограмма')
 plt.xlabel('frequency (1/s)')
 
 plt.tight_layout()
 plt.show()
-
-#corellogramma = TSAnalyzer.autocorr2(centered_series)
-
-#plt.subplot(3, 1, 1)
-#plt.plot(corellogramma)
-#plt.title('Смещенная коррелограмма')
-#plt.xlabel('time (s)')
 
 corellogramma = TSAnalyzer.autocorrelation(centered_series)
 
@@ -55,23 +49,23 @@ plt.title('Смещенная коррелограмма')
 plt.xlabel('time (s)')
 
 a = 0.25
-N_coeff = 0.5
-weighted_corell = corellogramma * TSAnalyzer.Tukey(a, N_coeff)
-(x, smoothed_period) = TSAnalyzer.smooth(weighted_corell)
+N_asterix = int(0.5*N)
+weighted_corell = corellogramma[:N_asterix-1] * TSAnalyzer.Tukey(a, N_asterix)
+(smoothed_period) = TSAnalyzer.smooth(weighted_corell)
 
 plt.subplot(3, 1, 2)
-plt.plot(x, smoothed_period)
-plt.title('Сглаженная периодограмма, параметры a = %.2f, N* = %.1f N' % (a, N_coeff))
+plt.plot(smoothed_period)
+plt.title('Сглаженная периодограмма, параметры a = %.2f, N* = %.1f N' % (a, 0.5))
 plt.xlabel('frequency (1/s)')
 
 a = 0.25
-N_coeff = 0.1
-weighted_corell = corellogramma * TSAnalyzer.Tukey(a, N_coeff)
-(x, smoothed_period) = TSAnalyzer.smooth(weighted_corell)
+N_asterix = int(0.1*N)
+weighted_corell = corellogramma[:N_asterix-1] * TSAnalyzer.Tukey(a, N_asterix)
+(smoothed_period) = TSAnalyzer.smooth(weighted_corell)
 
 plt.subplot(3, 1, 3)
-plt.plot(weighted_corell)
-plt.title('Сглаженная периодограмма, параметры a = %.2f, N* = %.1f N' % (a, N_coeff))
+plt.plot(smoothed_period)
+plt.title('Сглаженная периодограмма, параметры a = %.2f, N* = %.1f N' % (a, 0.5))
 plt.xlabel('frequency (1/s)')
 
 plt.tight_layout()
