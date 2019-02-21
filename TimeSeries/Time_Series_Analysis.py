@@ -51,21 +51,21 @@ plt.xlabel('time (s)')
 a = 0.25
 N_asterix = int(0.5*N)
 weighted_corell = corellogramma[:N_asterix-1] * TSAnalyzer.Tukey(a, N_asterix)
-(smoothed_period) = TSAnalyzer.smooth(weighted_corell)
+(x, smoothed_period) = TSAnalyzer.smooth(weighted_corell, N_asterix)
 
 plt.subplot(3, 1, 2)
-plt.plot(smoothed_period)
+plt.plot(x, smoothed_period)
 plt.title('Сглаженная периодограмма, параметры a = %.2f, N* = %.1f N' % (a, 0.5))
 plt.xlabel('frequency (1/s)')
 
 a = 0.25
 N_asterix = int(0.1*N)
 weighted_corell = corellogramma[:N_asterix-1] * TSAnalyzer.Tukey(a, N_asterix)
-(smoothed_period) = TSAnalyzer.smooth(weighted_corell)
+(x, smoothed_period) = TSAnalyzer.smooth(weighted_corell, N_asterix)
 
 plt.subplot(3, 1, 3)
-plt.plot(smoothed_period)
-plt.title('Сглаженная периодограмма, параметры a = %.2f, N* = %.1f N' % (a, 0.5))
+plt.plot(x, smoothed_period)
+plt.title('Сглаженная периодограмма, параметры a = %.2f, N* = %.1f N' % (a, 0.1))
 plt.xlabel('frequency (1/s)')
 
 plt.tight_layout()
