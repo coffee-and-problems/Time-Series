@@ -43,7 +43,10 @@ def periodogramma(centered_series):
 def dispersion(centered_series):
     """Оценка дисперсии центрированного ряда"""
     sum = np.sum(centered_series*centered_series)
-    return 1/(N - 1) * sum
+    D = 1/(N - 1) * sum
+    woopsel = A1*A1/D
+    poopsel = woopsel/2
+    return (D, poopsel)
 
 def autocorrelation(centered_series):
     """Возвращает коррелограмму"""

@@ -22,8 +22,8 @@ plt.legend()
 plt.xlabel('time (s)')
 
 centered_series = TSAnalyzer.center(time_series, trend)
-D = TSAnalyzer.dispersion(centered_series)
-print("Дисперсия = ", D)
+(D, g) = TSAnalyzer.dispersion(centered_series)
+print("Дисперсия = %.1f, сигнал/шум = %.1f" % (D, g))
 
 plt.subplot(4, 1, 3)
 plt.plot(centered_series)
