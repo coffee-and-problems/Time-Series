@@ -33,7 +33,7 @@ plt.xlabel('time (s)')
 (x, fourier) = TSAnalyzer.periodogramma(centered_series)
 
 plt.subplot(4, 1, 4)
-plt.plot(fourier)
+plt.plot(x, fourier)
 plt.axhline(y = 0.05, color='orange', linestyle='--')
 plt.title('Периодограмма')
 plt.xlabel('frequency (1/s)')

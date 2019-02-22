@@ -5,8 +5,8 @@ sys.path.append(__data_path)
 from parameters_resource import *
 import numpy as np
 
-N2 = 1024
-N1 = 512
+N2 = 4*N
+N1 = 2*N
 
 def get_trend(np_data):
     """Возвращает линейную аппроксимацию тренда и его параметры"""
@@ -19,7 +19,10 @@ def get_trend(np_data):
     trend = model.predict(x_2d)
 
     from scipy import polyfit
-    (b, a) = polyfit(x, trend, 1)
+    fit = polyfit(x, trend, 1, full = True)
+    a = fit[0][1]
+    b = fit[0][0]
+    err = fit[2]
     return (trend, a, b)
 
 def center(np_data, trend):
@@ -31,7 +34,7 @@ def center(np_data, trend):
 def periodogramma(centered_series):
     """Возвращает частоты и периодограмму"""
     from scipy.fftpack import fft
-    X = fft(centered_series, 1024)
+    X = fft(centered_series, N1)
     D = 1/(N*N) * (X.real*X.real + X.imag*X.imag)
     p = np.array_split(D, 2)[0]
     x = (np.linspace(0, (N-1), N//Δt))/(2*N)
