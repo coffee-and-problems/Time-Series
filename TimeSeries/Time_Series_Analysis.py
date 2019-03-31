@@ -23,7 +23,6 @@ plt.xlabel('time (s)')
 
 centered_series = TSAnalyzer.center(time_series, trend)
 (D, g) = TSAnalyzer.dispersion(centered_series)
-print("Дисперсия = %.1f, сигнал/шум = %.1f" % (D, g))
 
 plt.subplot(4, 1, 3)
 plt.plot(centered_series)
@@ -42,6 +41,11 @@ plt.tight_layout()
 plt.show()
 
 corellogramma = TSAnalyzer.autocorrelation(centered_series)
+
+from parameters_resource import A1
+gamma = (A1*A1)/(2*corellogramma[0])
+print("Дисперсия = %.1f, сигнал/шум = %.3f" % (D, gamma))
+
 
 plt.subplot(3, 1, 1)
 plt.plot(corellogramma)
