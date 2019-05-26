@@ -18,7 +18,13 @@ def get_trend(np_data):
     model.fit(x_2d, np_data)
     trend = model.predict(x_2d)
 
+    import statsmodels.api as sm
+    t = sm.add_constant(x, prepend=False)
+    modelo = sm.OLS(np_data,t)
+    result = modelo.fit()
+    print(result.summary())
     from scipy import polyfit
+
     fit = polyfit(x, trend, 1, full = True)
     a = fit[0][1]
     b = fit[0][0]

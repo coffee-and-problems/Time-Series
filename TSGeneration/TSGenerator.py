@@ -15,7 +15,7 @@ class Time_Series(object):
         tk = np.linspace(0, N-1, N//Δt)
         σ = np.sqrt(A1*A1/(2*γ))
         print(σ)
-        return α + β*tk + A1*np.cos(2*np.pi*ν1*tk - φ1) + σ*np.random.normal(0, 1, N//Δt)
+        return α + β*tk + A1*np.cos(2*np.pi*ν1*tk - φ1)# + σ*np.random.normal(0, 1, N//Δt)
 
     @staticmethod
     def save(data):

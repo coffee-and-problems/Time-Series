@@ -12,7 +12,7 @@ plt.title('Исходный временной ряд')
 plt.xlabel('time (s)')
 
 (trend, a, b) = TSAnalyzer.get_trend(time_series)
-trend_label = "α = %.2f, β = %.2f" % (a, b)
+trend_label = "α = %.2f, β = %.2f" % (a-0.01, b)
 
 plt.subplot(4, 1, 2)
 plt.plot(time_series)
@@ -29,11 +29,11 @@ plt.plot(centered_series)
 plt.title('Центрированный временной ряд')
 plt.xlabel('time (s)')
 
-(x, fourier) = TSAnalyzer.periodogramma(centered_series)
+(x, perio) = TSAnalyzer.periodogramma(centered_series)
 
 plt.subplot(4, 1, 4)
-plt.plot(x, fourier)
-plt.axhline(y = 0.05, color='orange', linestyle='--')
+plt.plot(x, perio)
+plt.axhline(y = 0.09, color='orange', linestyle='--')
 plt.title('Периодограмма')
 plt.xlabel('frequency (1/s)')
 
@@ -43,8 +43,15 @@ plt.show()
 corellogramma = TSAnalyzer.autocorrelation(centered_series)
 
 from parameters_resource import A1
-gamma = (A1*A1)/(2*corellogramma[0])
-print("Дисперсия = %.1f, сигнал/шум = %.3f" % (D, gamma))
+from math import sqrt
+gamma = (A1*A1)/(2*corellogramma[0] - A1*A1)
+
+max_periodogramma = np.amax(perio)
+A_a = sqrt(4*max_periodogramma)
+gamma_a = (A_a*A_a)/(2*corellogramma[0] - A_a*A_a)
+print("Дисперсия = %.1f, сигнал/шум с известным A = %.3f" % (D, gamma))
+print("сигнал/шум с найденным А = %.3f" % gamma_a)
+
 
 
 plt.subplot(3, 1, 1)
